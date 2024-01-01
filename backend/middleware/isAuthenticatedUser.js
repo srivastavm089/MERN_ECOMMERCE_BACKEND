@@ -2,6 +2,7 @@ const bycrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../model/userModal");
 exports.isAuthenticated = async (req, res, next) => {
+
   try {
     const { token } = req.cookies;
 
@@ -10,6 +11,7 @@ exports.isAuthenticated = async (req, res, next) => {
     const user = await User.findById(decode.id);
 
     if (user) {
+
       req.user = user;
       next();
     } else {
