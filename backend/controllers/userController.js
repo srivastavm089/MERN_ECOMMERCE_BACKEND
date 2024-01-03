@@ -286,11 +286,17 @@ exports.updateUserRole = async (req, res) => {
       email: req.body.email,
       role: req.body.role,
     };
-    await User.findByIdAndUpdate(req.user.id, newUserData, {
-      new: true,
-      runValidators: true,
-      useFindAndModify: false,
-    });
+
+    await User.findByIdAndUpdate(
+      req.params.id,
+      { $set: { ...newUserData } },
+      {
+        new: true,
+        runValidators: true,
+        useFindAndModify: false,
+      }
+    );
+
     res.status(200).json({
       success: true,
       message: "updated successfully",
@@ -303,6 +309,7 @@ exports.updateUserRole = async (req, res) => {
 exports.deleteUser = async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
+
     if (!user) {
       return res.status(401).json({
         success: false,
@@ -310,6 +317,8 @@ exports.deleteUser = async (req, res) => {
         message: `user not exist with id ${req.params.id}`,
       });
     }
+
+    await cloudinary.v2.uploader.destroy(user.avatar.public_id);
     await User.findByIdAndDelete(req.params.id);
     res.status(200).json({
       success: true,

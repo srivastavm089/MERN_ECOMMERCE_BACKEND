@@ -231,6 +231,7 @@ exports.createProductReview = async (req, res) => {
 //get all review of a product
 
 exports.getProductReview = async (req, res) => {
+ 
   const product = await Product.findById(req.query.id);
   if (!product) {
     return res.status(401).json({
