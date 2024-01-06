@@ -1,3 +1,4 @@
 /frontend
 /backend/config/.env
 /node_modules
+.vercel
