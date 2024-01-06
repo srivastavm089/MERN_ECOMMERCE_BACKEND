@@ -99,7 +99,7 @@ exports.forgotPassword = async (req, res, next) => {
 
   await user.save({ validateBeforeSave: false });
 
-  const resetPasswordUrl = `http://localhost:3000/password/reset/${reset}`;
+  const resetPasswordUrl = `${req.protocol}://${req.get("host")}/password/reset/${reset}`;
   const message = `Your password reset token is :- \n\n ${resetPasswordUrl}  \n\n if you have not requested then ,  please ignore it.`;
 
   try {
