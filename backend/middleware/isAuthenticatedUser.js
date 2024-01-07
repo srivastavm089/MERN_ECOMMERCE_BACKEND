@@ -4,7 +4,7 @@ const User = require("../model/userModal");
 exports.isAuthenticated = async (req, res, next) => {
 
   try {
-    const { token } = req.cookies;
+    const { token } = req.headers;
 
     const decode = jwt.verify(token, process.env.JWT_SECRET);
 
